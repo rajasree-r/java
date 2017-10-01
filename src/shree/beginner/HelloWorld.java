@@ -1,4 +1,4 @@
-package beginner;
+package shree.beginner;
 
 public class HelloWorld {
 
