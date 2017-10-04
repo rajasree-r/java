@@ -4,9 +4,6 @@ import jithu.abstractjava.common.IBag;
 
 import java.util.Arrays;
 
-/**
- * Created by aj on 10/1/17.
- */
 public class Bag<T> implements IBag<T> {
     private T[] mElements;
     private int mCurrentElementIndex;
