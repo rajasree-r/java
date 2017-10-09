@@ -1,6 +1,6 @@
 package jithu.abstractjava.arrays;
 
-import jithu.abstractjava.common.IBag;
+import common.IBag;
 
 import java.util.Arrays;
 
