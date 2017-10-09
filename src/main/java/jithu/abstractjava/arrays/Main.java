@@ -7,7 +7,9 @@ import jithu.abstractjava.common.IBag;
  */
 public class Main {
     public static void main(String[] args) {
+        //Object instantiation
         IBag<String> bagOfStrings = new Bag<>(new String[20]);
+
         bagOfStrings.add("A");
         bagOfStrings.add("B");
         System.out.println(bagOfStrings.toString());
