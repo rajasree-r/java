@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Bag<T> implements IBag<T> {
     private T[] mElements;
-    private int mCurrentElementIndex;
+    private int mCurrentIndex = -1;
 
     public Bag(T[] elements) {
         mElements = elements;
@@ -14,19 +14,19 @@ public class Bag<T> implements IBag<T> {
 
     @Override
     public int getCurrentSize() {
-        return mCurrentElementIndex;
+        return mCurrentIndex + 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return mElements.length == 0;
+        return getCurrentSize() == 0;
     }
 
     @Override
     public boolean add(T newEntry) {
-        if (mCurrentElementIndex < mElements.length) {
-            mElements[mCurrentElementIndex] = newEntry;
-            mCurrentElementIndex++;
+
+        if ( mElements != null && (mCurrentIndex + 1) < mElements.length ) {
+            mElements[++mCurrentIndex] = newEntry;
             return true;
         }
         return false;
@@ -34,17 +34,23 @@ public class Bag<T> implements IBag<T> {
 
     @Override
     public T remove() {
-        T currentElement = mElements[mCurrentElementIndex];
-        mCurrentElementIndex--;
-        return currentElement;
+        if(getCurrentSize() > 0) {
+            T currentElement = mElements[mCurrentIndex--];
+            return currentElement;
+        }
+        return null;
     }
 
     @Override
     public boolean remove(T anEntry) {
-        for (int i = 0; i < mElements.length; i++) {
+        for (int i = 0; i < getCurrentSize(); i++) {
             if (mElements[i].equals(anEntry)) {
-                mElements[i] = mElements[mCurrentElementIndex];
-                mCurrentElementIndex--;
+                if(i == mCurrentIndex){
+                    mElements[i] = null;
+                }else{
+                    mElements[i] = mElements[mCurrentIndex];
+                }
+                mCurrentIndex--;
                 return true;
             }
         }
@@ -53,7 +59,7 @@ public class Bag<T> implements IBag<T> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < mElements.length; i++) {
+        for (int i = 0; i < getCurrentSize(); i++) {
             mElements[i] = null;
         }
     }
@@ -61,7 +67,7 @@ public class Bag<T> implements IBag<T> {
     @Override
     public int getFrequencyOf(T anEntry) {
         int frequency = 0;
-        for (int i = 0; i < mElements.length; i++) {
+        for (int i = 0; i < getCurrentSize(); i++) {
             if (mElements[i].equals(anEntry)) {
                 frequency++;
             }
@@ -71,7 +77,7 @@ public class Bag<T> implements IBag<T> {
 
     @Override
     public boolean contains(T anEntry) {
-        for (int i = 0; i < mElements.length; i++) {
+        for (int i = 0; i < getCurrentSize(); i++) {
             if (mElements[i].equals(anEntry)) {
                 return true;
             }
@@ -81,8 +87,8 @@ public class Bag<T> implements IBag<T> {
 
     @Override
     public T[] toArray() {
-        T[] newElements = (T[]) new Object[mCurrentElementIndex];
-        for (int i = 0; i < mCurrentElementIndex; i++) {
+        T[] newElements = (T[]) new Object[getCurrentSize()];
+        for (int i = 0; i < getCurrentSize(); i++) {
             newElements[i] = mElements[i];
         }
         return newElements;
