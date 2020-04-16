@@ -12,24 +12,28 @@ public class Stack<T> implements IStack<T> {
 
     @Override
     public void push(T newEntry) {
-        if (mIndex < MAX_SIZE) {
+        if (mIndex < MAX_SIZE - 1) {
             mElements[mIndex] = newEntry;
             mIndex++;
-            System.out.println(toString());
         }
     }
 
     @Override
     public T pop() {
-        T temp = mElements[mIndex-1];
-        mElements[mIndex--] = null;
-        System.out.println(toString());
-        return temp;
+        if(mIndex > 0) {
+            T temp = mElements[mIndex - 1];
+            mElements[mIndex--] = null;
+            return temp;
+        }
+        return null;
     }
 
     @Override
     public T peek() {
-        return mElements[mIndex - 1];
+        if(mIndex > 0) {
+            return mElements[mIndex - 1];
+        }
+        return null;
     }
 
     @Override
